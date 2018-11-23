@@ -6,7 +6,6 @@ import com.howettl.mvvm.injection.component.DaggerViewModelInjector
 import com.howettl.mvvm.injection.component.ViewModelInjector
 import com.howettl.mvvm.injection.module.DatabaseModule
 import com.howettl.mvvm.injection.module.NetworkModule
-import com.howettl.mvvm.ui.post.PostListViewModel
 import com.howettl.mvvm.ui.user.UserListViewModel
 
 abstract class BaseViewModel(context: Context): ViewModel() {
@@ -24,7 +23,6 @@ abstract class BaseViewModel(context: Context): ViewModel() {
 
     private fun inject() {
         when (this) {
-            is PostListViewModel -> injector.inject(this)
             is UserListViewModel -> injector.inject(this)
         }
     }
