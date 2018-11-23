@@ -1,7 +1,8 @@
 package com.howettl.mvvm.injection.module
 
 import com.howettl.mvvm.BuildConfig
-import com.howettl.mvvm.io.PostApi
+import com.howettl.mvvm.data.network.PostApi
+import com.howettl.mvvm.data.repository.PostRemoteRepository
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
@@ -11,6 +12,13 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 @Module
 object NetworkModule {
+
+    @Provides
+    @Reusable
+    @JvmStatic
+    internal fun providePostRemoteRepository(postApi: PostApi): PostRemoteRepository {
+        return PostRemoteRepository(postApi)
+    }
 
     @Provides
     @Reusable

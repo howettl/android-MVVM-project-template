@@ -5,9 +5,9 @@ import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.howettl.mvvm.R
 import com.howettl.mvvm.base.BaseViewModel
-import com.howettl.mvvm.io.PostApi
-import com.howettl.mvvm.model.Post
-import com.howettl.mvvm.model.repository.PostRepository
+import com.howettl.mvvm.data.Post
+import com.howettl.mvvm.data.repository.PostLocalRepository
+import com.howettl.mvvm.data.repository.PostRemoteRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -21,9 +21,9 @@ class PostListViewModel(context: Context): BaseViewModel(context) {
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     @Inject
-    lateinit var postApi: PostApi
+    lateinit var postRemoteRepository: PostRemoteRepository
     @Inject
-    lateinit var postRepository: PostRepository
+    lateinit var postLocalRepository: PostLocalRepository
 
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     val errorMessage: MutableLiveData<Int> = MutableLiveData()
@@ -39,23 +39,25 @@ class PostListViewModel(context: Context): BaseViewModel(context) {
         uiScope.launch {
             onStartedLoadingPosts()
 
-            val cachedPosts = postRepository.getAll()
-            if (cachedPosts.isEmpty()) {
-                try {
-                    val posts = postApi.getPosts().await()
-                    onLoadedPosts(posts)
-                    postRepository.insertAll(*posts.toTypedArray())
-                } catch (e: Exception) {
-                    onErrorLoadingPosts(e)
-                }
-            } else onLoadedPosts(cachedPosts)
+            val cachedPosts = postLocalRepository.getAll()
 
-            onFinishedLoadingPosts()
+            if (cachedPosts.isNotEmpty()) {
+                onLoadedPosts(cachedPosts)
+            }
+            try {
+                val updatedPosts = postRemoteRepository.getPosts()
+                postLocalRepository.insertAll(*updatedPosts.toTypedArray())
+                if (cachedPosts.isEmpty()) onLoadedPosts(updatedPosts)
+            } catch (e: Exception) {
+                Timber.e(e)
+                if (cachedPosts.isEmpty()) onErrorLoadingPosts(e)
+            }
         }
     }
 
     private fun onLoadedPosts(posts: List<Post>) {
-        postListAdapter.updatePostList(posts)
+        postListAdapter.postList = posts
+        loadingVisibility.value = View.GONE
     }
 
     private fun onErrorLoadingPosts(error: Throwable) {
@@ -66,10 +68,6 @@ class PostListViewModel(context: Context): BaseViewModel(context) {
     private fun onStartedLoadingPosts() {
         loadingVisibility.value = View.VISIBLE
         errorMessage.value = null
-    }
-
-    private fun onFinishedLoadingPosts() {
-        loadingVisibility.value = View.GONE
     }
 
     override fun onCleared() {

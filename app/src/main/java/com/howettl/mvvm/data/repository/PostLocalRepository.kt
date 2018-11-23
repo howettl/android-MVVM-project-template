@@ -1,13 +1,13 @@
-package com.howettl.mvvm.model.repository
+package com.howettl.mvvm.data.repository
 
-import com.howettl.mvvm.model.Post
-import com.howettl.mvvm.model.PostDao
+import com.howettl.mvvm.data.Post
+import com.howettl.mvvm.data.PostDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class PostRepository(private val postDao: PostDao) {
+class PostLocalRepository(private val postDao: PostDao) {
 
     suspend fun getAll(): List<Post> {
         return withContext(Dispatchers.IO) {
@@ -18,6 +18,12 @@ class PostRepository(private val postDao: PostDao) {
     suspend fun insertAll(vararg posts: Post) {
         withContext(Dispatchers.IO) {
             launch { postDao.insertAll(*posts) }
+        }
+    }
+
+    suspend fun count(): Int {
+        return withContext(Dispatchers.IO) {
+            async { postDao.count }.await()
         }
     }
 

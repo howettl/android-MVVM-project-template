@@ -2,9 +2,9 @@ package com.howettl.mvvm.injection.module
 
 import android.content.Context
 import androidx.room.Room
-import com.howettl.mvvm.model.PostDao
-import com.howettl.mvvm.model.database.AppDatabase
-import com.howettl.mvvm.model.repository.PostRepository
+import com.howettl.mvvm.data.PostDao
+import com.howettl.mvvm.data.database.AppDatabase
+import com.howettl.mvvm.data.repository.PostLocalRepository
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -15,8 +15,8 @@ object DatabaseModule {
     @Provides
     @Reusable
     @JvmStatic
-    internal fun providesPostRepository(postDao: PostDao): PostRepository {
-        return PostRepository(postDao)
+    internal fun providesPostLocalRepository(postDao: PostDao): PostLocalRepository {
+        return PostLocalRepository(postDao)
     }
 
     @Provides
