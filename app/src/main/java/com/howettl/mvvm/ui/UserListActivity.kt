@@ -10,14 +10,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.howettl.mvvm.R
-import com.howettl.mvvm.databinding.ActivityPostListBinding
+import com.howettl.mvvm.databinding.ActivityUserListBinding
 import com.howettl.mvvm.injection.ViewModelFactory
-import com.howettl.mvvm.ui.post.PostListViewModel
+import com.howettl.mvvm.ui.user.UserListViewModel
 
-class PostListActivity: AppCompatActivity() {
+class UserListActivity: AppCompatActivity() {
 
-    private lateinit var binding: ActivityPostListBinding
-    private lateinit var viewModel: PostListViewModel
+    private lateinit var binding: ActivityUserListBinding
+    private lateinit var viewModel: UserListViewModel
 
     private var errorSnackbar: Snackbar? = null
 
@@ -26,11 +26,11 @@ class PostListActivity: AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(
             this,
-            R.layout.activity_post_list
+            R.layout.activity_user_list
         )
-        binding.postList.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        binding.userList.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
-        viewModel = ViewModelProviders.of(this, ViewModelFactory(this)).get(PostListViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, ViewModelFactory(this)).get(UserListViewModel::class.java)
         binding.viewModel = viewModel
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->

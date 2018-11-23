@@ -4,6 +4,7 @@ import android.content.Context
 import com.howettl.mvvm.injection.module.DatabaseModule
 import com.howettl.mvvm.injection.module.NetworkModule
 import com.howettl.mvvm.ui.post.PostListViewModel
+import com.howettl.mvvm.ui.user.UserListViewModel
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -13,6 +14,7 @@ import javax.inject.Singleton
 interface ViewModelInjector {
 
     fun inject(postListViewModel: PostListViewModel)
+    fun inject(userListViewModel: UserListViewModel)
 
     @Component.Builder
     interface Builder {

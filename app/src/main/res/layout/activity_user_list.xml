@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.howettl.mvvm.ui.post.PostListViewModel" />
+            type="com.howettl.mvvm.ui.user.UserListViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,10 +23,10 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/post_list"
+            android:id="@+id/user_list"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:adapter="@{viewModel.postListAdapter}"
+            android:adapter="@{viewModel.userListAdapter}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
