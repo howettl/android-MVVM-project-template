@@ -1,4 +1,4 @@
-package com.howettl.mvvm
+package com.howettl.mvvm.ui
 
 import android.os.Bundle
 import androidx.annotation.StringRes
@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.howettl.mvvm.R
 import com.howettl.mvvm.databinding.ActivityPostListBinding
 import com.howettl.mvvm.injection.ViewModelFactory
 import com.howettl.mvvm.ui.post.PostListViewModel

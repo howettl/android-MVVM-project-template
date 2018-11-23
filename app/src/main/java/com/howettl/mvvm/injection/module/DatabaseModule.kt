@@ -2,7 +2,7 @@ package com.howettl.mvvm.injection.module
 
 import android.content.Context
 import androidx.room.Room
-import com.howettl.mvvm.data.PostDao
+import com.howettl.mvvm.data.database.PostDao
 import com.howettl.mvvm.data.database.AppDatabase
 import com.howettl.mvvm.data.repository.PostLocalRepository
 import dagger.Module

@@ -5,7 +5,7 @@ import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.howettl.mvvm.R
 import com.howettl.mvvm.base.BaseViewModel
-import com.howettl.mvvm.data.Post
+import com.howettl.mvvm.data.model.Post
 import com.howettl.mvvm.data.repository.PostLocalRepository
 import com.howettl.mvvm.data.repository.PostRemoteRepository
 import kotlinx.coroutines.CoroutineScope

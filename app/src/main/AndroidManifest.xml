@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.howettl.mvvm.PostListActivity">
+        <activity android:name="com.howettl.mvvm.ui.PostListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

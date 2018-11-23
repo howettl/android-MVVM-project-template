@@ -1,6 +1,6 @@
 package com.howettl.mvvm.data.repository
 
-import com.howettl.mvvm.data.Post
+import com.howettl.mvvm.data.model.Post
 import com.howettl.mvvm.data.network.PostApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

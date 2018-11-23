@@ -1,6 +1,6 @@
 package com.howettl.mvvm.data.network
 
-import com.howettl.mvvm.data.Post
+import com.howettl.mvvm.data.model.Post
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 

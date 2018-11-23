@@ -1,4 +1,4 @@
-package com.howettl.mvvm.data
+package com.howettl.mvvm.data.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

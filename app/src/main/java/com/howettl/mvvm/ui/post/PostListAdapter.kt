@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.howettl.mvvm.R
-import com.howettl.mvvm.data.Post
+import com.howettl.mvvm.data.model.Post
 import com.howettl.mvvm.databinding.ItemPostBinding
 
 class PostListAdapter: RecyclerView.Adapter<PostListAdapter.ViewHolder>() {

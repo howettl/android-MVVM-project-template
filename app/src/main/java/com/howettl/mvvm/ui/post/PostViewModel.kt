@@ -2,7 +2,7 @@ package com.howettl.mvvm.ui.post
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.howettl.mvvm.data.Post
+import com.howettl.mvvm.data.model.Post
 
 class PostViewModel: ViewModel() {
 
