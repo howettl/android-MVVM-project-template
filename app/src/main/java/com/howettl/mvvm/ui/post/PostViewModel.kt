@@ -1,10 +1,10 @@
 package com.howettl.mvvm.ui.post
 
 import androidx.lifecycle.MutableLiveData
-import com.howettl.mvvm.base.BaseViewModel
+import androidx.lifecycle.ViewModel
 import com.howettl.mvvm.model.Post
 
-class PostViewModel: BaseViewModel() {
+class PostViewModel: ViewModel() {
 
     val postTitle = MutableLiveData<String>()
     val postBody = MutableLiveData<String>()

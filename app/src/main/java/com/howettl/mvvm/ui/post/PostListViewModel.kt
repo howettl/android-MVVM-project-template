@@ -1,23 +1,29 @@
 package com.howettl.mvvm.ui.post
 
+import android.content.Context
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.howettl.mvvm.R
 import com.howettl.mvvm.base.BaseViewModel
 import com.howettl.mvvm.io.PostApi
 import com.howettl.mvvm.model.Post
-import com.howettl.mvvm.model.PostDao
-import kotlinx.coroutines.*
+import com.howettl.mvvm.model.repository.PostRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
-class PostListViewModel(private val postDao: PostDao): BaseViewModel() {
+class PostListViewModel(context: Context): BaseViewModel(context) {
 
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     @Inject
     lateinit var postApi: PostApi
+    @Inject
+    lateinit var postRepository: PostRepository
 
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     val errorMessage: MutableLiveData<Int> = MutableLiveData()
@@ -33,12 +39,12 @@ class PostListViewModel(private val postDao: PostDao): BaseViewModel() {
         uiScope.launch {
             onStartedLoadingPosts()
 
-            val cachedPosts = async(Dispatchers.IO) { postDao.all }.await()
+            val cachedPosts = postRepository.getAll()
             if (cachedPosts.isEmpty()) {
                 try {
                     val posts = postApi.getPosts().await()
                     onLoadedPosts(posts)
-                    launch(Dispatchers.IO) { postDao.insertAll(*posts.toTypedArray()) }
+                    postRepository.insertAll(*posts.toTypedArray())
                 } catch (e: Exception) {
                     onErrorLoadingPosts(e)
                 }
