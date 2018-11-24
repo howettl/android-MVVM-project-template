@@ -3,4 +3,5 @@
     <string name="retry">Retry</string>
     <string name="an_error_occurred_while_loading_posts">An error occurred while loading posts</string>
     <string name="an_error_occurred_while_loading_users">An error occurred while loading users</string>
+    <string name="an_error_occurred_while_loading_user_info">An error occurred while loading user info</string>
 </resources>

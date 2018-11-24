@@ -9,5 +9,18 @@
         android:id="@+id/userListFragment"
         android:name="com.howettl.mvvm.ui.user.UserListFragment"
         android:label="UserListFragment"
-        tools:layout="@layout/fragment_user_list" />
+        tools:layout="@layout/fragment_user_list" >
+        <action
+            android:id="@+id/action_userListFragment_to_userDetailFragment"
+            app:destination="@id/userDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userDetailFragment"
+        android:name="com.howettl.mvvm.ui.user.UserDetailFragment"
+        android:label="UserDetailFragment" >
+        <argument
+            android:name="userId"
+            android:defaultValue="-1"
+            app:argType="integer" />
+    </fragment>
 </navigation>

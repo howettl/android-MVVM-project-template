@@ -13,7 +13,7 @@ interface UserDao {
     val all: List<User>
 
     @Query("SELECT * FROM user WHERE id=:userId")
-    fun getById(userId: Long): User
+    fun getById(userId: Int): User?
 
     @get:Query("SELECT count(*) FROM user")
     val count: Int

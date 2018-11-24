@@ -10,5 +10,5 @@ interface UserApi {
     fun getUsers(): Deferred<List<User>>
 
     @GET("/users/{userId}")
-    fun getUserById(@Path("userId") userId: Long): Deferred<User>
+    fun getUserById(@Path("userId") userId: Int): Deferred<User>
 }

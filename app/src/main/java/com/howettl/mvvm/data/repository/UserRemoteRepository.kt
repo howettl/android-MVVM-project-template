@@ -13,7 +13,7 @@ class UserRemoteRepository(private val userApi: UserApi) {
         }
     }
 
-    suspend fun getUserById(userId: Long): User {
+    suspend fun getUserById(userId: Int): User {
         return withContext(Dispatchers.IO) {
             userApi.getUserById(userId).await()
         }

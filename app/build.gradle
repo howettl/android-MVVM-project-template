@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs'
 
 android {
     compileSdkVersion 28
@@ -48,7 +49,6 @@ dependencies {
     kapt 'com.android.databinding:compiler:3.1.4'
 
     // Navigation
-    def nav_version = "1.0.0-alpha07"
     implementation "android.arch.navigation:navigation-fragment-ktx:$nav_version"
     implementation "android.arch.navigation:navigation-ui-ktx:$nav_version"
 

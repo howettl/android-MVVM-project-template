@@ -27,6 +27,7 @@ class UserListFragment: Fragment() {
         binding.userList.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         viewModel = ViewModelProviders.of(this, ViewModelFactory(context ?: return null)).get(UserListViewModel::class.java)
         binding.viewModel = viewModel
+        binding.setLifecycleOwner(this)
         return binding.root
     }
 

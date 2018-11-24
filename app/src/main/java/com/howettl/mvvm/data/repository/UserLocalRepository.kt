@@ -15,7 +15,7 @@ class UserLocalRepository(private val userDao: UserDao) {
         }
     }
 
-    suspend fun getById(id: Long): User {
+    suspend fun getById(id: Int): User? {
         return withContext(Dispatchers.IO) {
             async { userDao.getById(id) }.await()
         }

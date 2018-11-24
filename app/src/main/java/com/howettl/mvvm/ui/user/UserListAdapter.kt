@@ -3,6 +3,7 @@ package com.howettl.mvvm.ui.user
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.howettl.mvvm.R
 import com.howettl.mvvm.data.model.User
@@ -21,6 +22,12 @@ class UserListAdapter: RecyclerView.Adapter<UserListAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(userList[position])
+
+        holder.itemView.setOnClickListener { view ->
+            val action = UserListFragmentDirections.actionUserListFragmentToUserDetailFragment()
+            action.setUserId(userList[position].id)
+            view.findNavController().navigate(action)
+        }
     }
 
     override fun getItemCount() = userList.size

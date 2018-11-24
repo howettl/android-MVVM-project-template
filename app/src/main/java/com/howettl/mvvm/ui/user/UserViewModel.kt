@@ -20,4 +20,12 @@ class UserViewModel: ViewModel() {
         website.value = user.website
     }
 
+    fun unbind() {
+        name.value = null
+        username.value = null
+        email.value = null
+        phone.value = null
+        website.value = null
+    }
+
 }
