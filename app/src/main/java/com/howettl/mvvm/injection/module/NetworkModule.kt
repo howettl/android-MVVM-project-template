@@ -8,43 +8,43 @@ import com.howettl.mvvm.data.repository.UserRemoteRepository
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
-import dagger.Reusable
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Singleton
 
 @Module
 object NetworkModule {
 
     @Provides
-    @Reusable
+    @Singleton
     @JvmStatic
     internal fun provideUserRemoteRepository(userApi: UserApi): UserRemoteRepository {
         return UserRemoteRepository(userApi)
     }
 
     @Provides
-    @Reusable
+    @Singleton
     @JvmStatic
     internal fun provideUserApi(retrofit: Retrofit): UserApi {
         return retrofit.create(UserApi::class.java)
     }
 
     @Provides
-    @Reusable
+    @Singleton
     @JvmStatic
     internal fun providePostRemoteRepository(postApi: PostApi): PostRemoteRepository {
         return PostRemoteRepository(postApi)
     }
 
     @Provides
-    @Reusable
+    @Singleton
     @JvmStatic
     internal fun providePostApi(retrofit: Retrofit): PostApi {
         return retrofit.create(PostApi::class.java)
     }
 
     @Provides
-    @Reusable
+    @Singleton
     @JvmStatic
     internal fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()

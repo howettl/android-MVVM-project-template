@@ -9,42 +9,42 @@ import com.howettl.mvvm.data.repository.PostLocalRepository
 import com.howettl.mvvm.data.repository.UserLocalRepository
 import dagger.Module
 import dagger.Provides
-import dagger.Reusable
+import javax.inject.Singleton
 
 @Module
 object DatabaseModule {
 
     @Provides
-    @Reusable
+    @Singleton
     @JvmStatic
     internal fun providesUserLocalRepository(userDao: UserDao): UserLocalRepository {
         return UserLocalRepository(userDao)
     }
 
     @Provides
-    @Reusable
+    @Singleton
     @JvmStatic
     internal fun providesUserDao(db: AppDatabase): UserDao {
         return db.userDao()
     }
 
     @Provides
-    @Reusable
+    @Singleton
     @JvmStatic
     internal fun providesPostLocalRepository(postDao: PostDao): PostLocalRepository {
         return PostLocalRepository(postDao)
     }
 
     @Provides
-    @Reusable
+    @Singleton
     @JvmStatic
     internal fun providesPostDao(db: AppDatabase): PostDao {
         return db.postDao()
     }
 
     @Provides
-    @Reusable
     @JvmStatic
+    @Singleton
     internal fun providesAppDatabase(context: Context): AppDatabase =
             Room
                 .databaseBuilder(context.applicationContext, AppDatabase::class.java, "posts")
