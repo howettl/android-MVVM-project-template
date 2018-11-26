@@ -13,4 +13,10 @@ class PostRemoteRepository(private val postApi: PostApi) {
         }
     }
 
+    suspend fun getPostsByUser(userId: Int): List<Post> {
+        return withContext(Dispatchers.IO) {
+            postApi.getPostsByUser(userId).await()
+        }
+    }
+
 }

@@ -8,6 +8,8 @@ import androidx.annotation.StringRes
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.howettl.mvvm.R
 import com.howettl.mvvm.databinding.FragmentUserDetailBinding
@@ -24,6 +26,7 @@ class UserDetailFragment: Fragment() {
         viewModel = ViewModelProviders.of(this, ViewModelFactory(context ?: return null)).get(UserDetailViewModel::class.java)
         binding.detailViewModel = viewModel
         binding.userViewModel = viewModel.userViewModel
+        binding.postsRecyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         binding.setLifecycleOwner(this)
         return binding.root
     }

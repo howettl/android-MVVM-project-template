@@ -15,6 +15,9 @@ interface PostDao {
     @get:Query("SELECT count(*) FROM post")
     val count: Int
 
+    @Query("SELECT * FROM post WHERE userId = :userId")
+    fun getByUserId(userId: Int): List<Post>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg posts: Post)
 
