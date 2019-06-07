@@ -10,8 +10,12 @@
             type="com.howettl.mvvm.ui.user.UserDetailViewModel" />
 
         <variable
-            name="userViewModel"
-            type="com.howettl.mvvm.ui.user.UserViewModel" />
+            name="user"
+            type="com.howettl.mvvm.data.model.User" />
+
+        <variable
+            name="postAdapter"
+            type="com.howettl.mvvm.ui.post.PostAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,7 +29,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="@{userViewModel.name}"
+            android:text="@{user.name}"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/username"
             app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +45,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="@{userViewModel.username}"
+            android:text="@{user.username}"
             app:layout_constraintBottom_toTopOf="@+id/email"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -54,7 +58,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="@{userViewModel.email}"
+            android:text="@{user.email}"
             app:layout_constraintBottom_toTopOf="@+id/phone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -67,7 +71,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="@{userViewModel.phone}"
+            android:text="@{user.phone}"
             app:layout_constraintBottom_toTopOf="@+id/website"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -81,7 +85,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="8dp"
-            android:text="@{userViewModel.website}"
+            android:text="@{user.website}"
             app:layout_constraintBottom_toTopOf="@+id/posts_recycler_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -95,7 +99,7 @@
             android:layout_height="0dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
-            android:adapter="@{detailViewModel.postAdapter}"
+            android:adapter="@{postAdapter}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

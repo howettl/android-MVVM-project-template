@@ -11,7 +11,7 @@ import com.howettl.mvvm.databinding.ItemUserBinding
 
 class UserListAdapter: RecyclerView.Adapter<UserListAdapter.ViewHolder>() {
 
-    var userList: List<User> = listOf()
+    var userList: List<User>? = listOf()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -21,23 +21,21 @@ class UserListAdapter: RecyclerView.Adapter<UserListAdapter.ViewHolder>() {
         ViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_user, parent, false))
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(userList[position])
+        val user = userList?.get(position) ?: return
+        holder.bind(user)
 
         holder.itemView.setOnClickListener { view ->
             val action = UserListFragmentDirections.actionUserListFragmentToUserDetailFragment()
-            action.setUserId(userList[position].id)
+            action.setUserId(user.id)
             view.findNavController().navigate(action)
         }
     }
 
-    override fun getItemCount() = userList.size
+    override fun getItemCount() = userList?.size ?: 0
 
     inner class ViewHolder(private val binding: ItemUserBinding): RecyclerView.ViewHolder(binding.root) {
-        private val viewModel = UserViewModel()
-
         fun bind(user: User) {
-            viewModel.bind(user)
-            binding.viewModel = viewModel
+            binding.user = user
         }
     }
 

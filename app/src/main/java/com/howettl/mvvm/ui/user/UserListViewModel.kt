@@ -2,7 +2,9 @@ package com.howettl.mvvm.ui.user
 
 import android.content.Context
 import android.view.View
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.howettl.mvvm.R
 import com.howettl.mvvm.base.AsyncViewModel
 import com.howettl.mvvm.data.model.User
@@ -23,43 +25,31 @@ class UserListViewModel(context: Context): AsyncViewModel(context) {
     val errorMessage: MutableLiveData<Int> = MutableLiveData()
     val errorClickListener = View.OnClickListener { loadUsers() }
 
-    val userListAdapter = UserListAdapter()
+    var users: LiveData<List<User>>? = null
 
     init {
+        loadingVisibility.value = View.GONE
         loadUsers()
     }
 
-    private fun loadUsers() {
+    fun loadUsers() {
+        if (users == null) {
+            users = userLocalRepository.getAll()
+        }
+
         launch {
-            onStartedLoadingUsers()
-
-            val cachedUsers = userLocalRepository.getAll()
-
-            if (cachedUsers.isNotEmpty()) {
-                onLoadedUsers(cachedUsers)
+            if (userLocalRepository.count() == 0) {
+                loadingVisibility.value = View.VISIBLE
             }
+
             try {
                 val updatedUsers = userRemoteRepository.getUsers()
-                if (cachedUsers.isEmpty()) onLoadedUsers(updatedUsers)
                 userLocalRepository.insert(*updatedUsers.toTypedArray())
             } catch (e: Exception) {
                 Timber.e(e)
-                if (cachedUsers.isEmpty()) onErrorLoadingUsers(e)
             }
+
+            loadingVisibility.value = View.GONE
         }
-    }
-
-    private fun onLoadedUsers(users: List<User>) {
-        userListAdapter.userList = users
-        loadingVisibility.value = View.GONE
-    }
-
-    private fun onErrorLoadingUsers(error: Throwable) {
-        errorMessage.value = R.string.an_error_occurred_while_loading_users
-    }
-
-    private fun onStartedLoadingUsers() {
-        loadingVisibility.value = View.VISIBLE
-        errorMessage.value = null
     }
 }

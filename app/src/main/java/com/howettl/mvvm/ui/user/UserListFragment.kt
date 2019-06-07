@@ -37,6 +37,18 @@ class UserListFragment: Fragment() {
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
             if (errorMessage != null) showError(errorMessage) else hideError()
         })
+
+        val adapter = UserListAdapter()
+        viewModel.users?.observe(this, Observer {
+            adapter.userList = it
+        })
+        binding.adapter = adapter
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.loadUsers()
     }
 
     private fun showError(@StringRes message: Int) {

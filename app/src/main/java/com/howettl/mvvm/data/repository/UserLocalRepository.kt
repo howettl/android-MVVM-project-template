@@ -9,17 +9,9 @@ import kotlinx.coroutines.withContext
 
 class UserLocalRepository(private val userDao: UserDao) {
 
-    suspend fun getAll(): List<User> {
-        return withContext(Dispatchers.IO) {
-            async { userDao.all }.await()
-        }
-    }
+    fun getAll() = userDao.all()
 
-    suspend fun getById(id: Int): User? {
-        return withContext(Dispatchers.IO) {
-            async { userDao.getById(id) }.await()
-        }
-    }
+    fun getById(id: Int) = userDao.getById(id)
 
     suspend fun insert(vararg users: User) {
         withContext(Dispatchers.IO) {
