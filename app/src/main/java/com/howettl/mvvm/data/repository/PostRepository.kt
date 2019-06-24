@@ -6,34 +6,19 @@ import com.howettl.mvvm.data.model.Post
 import com.howettl.mvvm.data.network.PostApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 class PostRepository(private val postDao: PostDao, private val postApi: PostApi) {
 
-    fun getCachedPosts(): LiveData<List<Post>> = postDao.all()
+    fun getPosts() = postDao.all()
 
-    suspend fun getRemotePosts(): List<Post> {
-        return withContext(Dispatchers.IO) {
-            postApi.getPosts().await()
-        }
-    }
+    fun getPostsByUser(userId: Int) = postDao.getByUserId(userId)
 
-    fun getCachedPostsByUserId(userId: Int): LiveData<List<Post>> = postDao.getByUserId(userId)
-
-    suspend fun getRemotePostsByUserId(userId: Int): List<Post> {
-        return withContext(Dispatchers.IO) {
-            postApi.getPostsByUser(userId).await()
-        }
-    }
-
-    suspend fun insertCached(vararg posts: Post) {
-        withContext(Dispatchers.IO) {
-            postDao.insertAll(*posts)
-        }
-    }
-
-    suspend fun countCached(): Int {
-        return withContext(Dispatchers.IO) {
-            postDao.count
+    suspend fun refreshPosts(userId: Int) = withContext(Dispatchers.IO) {
+        try {
+            postDao.insertAll(*postApi.getPostsByUser(userId).await().toTypedArray())
+        } catch (e: Exception) {
+            Timber.e(e)
         }
     }
 

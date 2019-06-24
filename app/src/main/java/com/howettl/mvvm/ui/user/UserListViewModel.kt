@@ -20,7 +20,7 @@ class UserListViewModel(context: Context) : AsyncViewModel(context) {
     val errorMessage: MutableLiveData<Int> = MutableLiveData()
     val errorClickListener = View.OnClickListener { loadUsers() }
 
-    var users: LiveData<List<User>>? = null
+    val users: LiveData<List<User>> = userRepository.getUsers()
 
     init {
         loadingVisibility.value = View.GONE
@@ -28,21 +28,12 @@ class UserListViewModel(context: Context) : AsyncViewModel(context) {
     }
 
     fun loadUsers() {
-        if (users == null) {
-            users = userRepository.getCachedUsers()
-        }
-
         launch {
-            if (userRepository.countCached() == 0) {
+            if (userRepository.getCachedCount() == 0) {
                 loadingVisibility.value = View.VISIBLE
             }
 
-            try {
-                val updatedUsers = userRepository.getRemoteUsers()
-                userRepository.insertCached(*updatedUsers.toTypedArray())
-            } catch (e: Exception) {
-                Timber.e(e)
-            }
+            userRepository.refreshUsers()
 
             loadingVisibility.value = View.GONE
         }

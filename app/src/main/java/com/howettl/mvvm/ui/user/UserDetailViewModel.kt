@@ -10,7 +10,6 @@ import com.howettl.mvvm.data.model.User
 import com.howettl.mvvm.data.repository.PostRepository
 import com.howettl.mvvm.data.repository.UserRepository
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 class UserDetailViewModel(context: Context) : AsyncViewModel(context) {
@@ -23,30 +22,17 @@ class UserDetailViewModel(context: Context) : AsyncViewModel(context) {
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     val errorMessage: MutableLiveData<Int> = MutableLiveData()
 
-    var posts: LiveData<List<Post>>? = null
-    var user: LiveData<User>? = null
+    lateinit var posts: LiveData<List<Post>>
+    lateinit var user: LiveData<User>
 
     fun loadUser(userId: Int) {
-        posts = postRepository.getCachedPostsByUserId(userId)
-        user = userRepository.getCachedUserById(userId)
+        loadingVisibility.value = View.VISIBLE
+        errorMessage.value = null
 
-        launch {
-            loadingVisibility.value = View.VISIBLE
-            errorMessage.value = null
+        posts = postRepository.getPostsByUser(userId)
+        user = userRepository.getUserById(userId)
 
-            try {
-                val updatedUser = userRepository.getRemoteUserById(userId)
-                userRepository.insertCached(updatedUser)
-            } catch (e: Exception) {
-                Timber.e(e)
-            }
-
-            try {
-                val updatedPosts = postRepository.getRemotePostsByUserId(userId)
-                postRepository.insertCached(*updatedPosts.toTypedArray())
-            } catch (e: Exception) {
-                Timber.e(e)
-            }
-        }
+        launch { userRepository.refreshUser(userId) }
+        launch { postRepository.refreshPosts(userId) }
     }
 }

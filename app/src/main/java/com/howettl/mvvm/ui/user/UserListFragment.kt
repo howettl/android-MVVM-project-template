@@ -39,7 +39,7 @@ class UserListFragment: Fragment() {
         })
 
         val adapter = UserListAdapter()
-        viewModel.users?.observe(this, Observer {
+        viewModel.users.observe(this, Observer {
             adapter.userList = it
         })
         binding.adapter = adapter
