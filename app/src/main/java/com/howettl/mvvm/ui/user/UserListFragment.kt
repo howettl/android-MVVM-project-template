@@ -8,26 +8,24 @@ import androidx.annotation.StringRes
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.howettl.mvvm.R
 import com.howettl.mvvm.databinding.FragmentUserListBinding
-import com.howettl.mvvm.injection.ViewModelFactory
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class UserListFragment: Fragment() {
 
     private lateinit var binding: FragmentUserListBinding
-    private lateinit var viewModel: UserListViewModel
+    private val viewModel: UserListViewModel by viewModel()
     private var errorSnackbar: Snackbar? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_user_list, container, false)
         binding.userList.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        viewModel = ViewModelProviders.of(this, ViewModelFactory(context ?: return null)).get(UserListViewModel::class.java)
         binding.viewModel = viewModel
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
         return binding.root
     }
 

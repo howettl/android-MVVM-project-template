@@ -19,7 +19,7 @@ interface UserDao {
     @get:Query("SELECT count(*) FROM user")
     val count: Int
 
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(vararg users: User)
 
 }

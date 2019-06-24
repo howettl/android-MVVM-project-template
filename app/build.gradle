@@ -33,11 +33,8 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'
 
-    // Dagger 2
-    def dagger_version = '2.19'
-    implementation "com.google.dagger:dagger:$dagger_version"
-    kapt "com.google.dagger:dagger-compiler:$dagger_version"
-    compileOnly 'org.glassfish:javax.annotation:3.1.1'
+    // Koin
+    implementation 'org.koin:koin-android-viewmodel:2.0.1'
 
     // Retrofit
     def retrofit_version = '2.5.0'

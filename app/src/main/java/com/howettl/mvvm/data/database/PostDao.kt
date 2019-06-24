@@ -19,7 +19,7 @@ interface PostDao {
     @Query("SELECT * FROM post WHERE userId = :userId")
     fun getByUserId(userId: Int): LiveData<List<Post>>
 
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertAll(vararg posts: Post)
 
 }

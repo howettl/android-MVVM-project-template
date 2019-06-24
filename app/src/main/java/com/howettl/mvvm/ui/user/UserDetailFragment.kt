@@ -7,26 +7,23 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.howettl.mvvm.R
 import com.howettl.mvvm.databinding.FragmentUserDetailBinding
-import com.howettl.mvvm.injection.ViewModelFactory
 import com.howettl.mvvm.ui.post.PostAdapter
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class UserDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentUserDetailBinding
-    private lateinit var viewModel: UserDetailViewModel
+    private val viewModel: UserDetailViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_user_detail, container, false)
-        viewModel =
-            ViewModelProviders.of(this, ViewModelFactory(context ?: return null)).get(UserDetailViewModel::class.java)
         binding.detailViewModel = viewModel
         binding.postsRecyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
         return binding.root
     }
 

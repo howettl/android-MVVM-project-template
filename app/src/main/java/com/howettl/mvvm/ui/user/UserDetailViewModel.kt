@@ -1,6 +1,5 @@
 package com.howettl.mvvm.ui.user
 
-import android.content.Context
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,17 +9,14 @@ import com.howettl.mvvm.data.model.User
 import com.howettl.mvvm.data.repository.PostRepository
 import com.howettl.mvvm.data.repository.UserRepository
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class UserDetailViewModel(context: Context) : AsyncViewModel(context) {
+class UserDetailViewModel(
+    private val userRepository: UserRepository,
+    private val postRepository: PostRepository
+) : AsyncViewModel() {
 
-    @Inject
-    lateinit var userRepository: UserRepository
-    @Inject
-    lateinit var postRepository: PostRepository
-
-    val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
-    val errorMessage: MutableLiveData<Int> = MutableLiveData()
+    private val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
+    private val errorMessage: MutableLiveData<Int> = MutableLiveData()
 
     lateinit var posts: LiveData<List<Post>>
     lateinit var user: LiveData<User>

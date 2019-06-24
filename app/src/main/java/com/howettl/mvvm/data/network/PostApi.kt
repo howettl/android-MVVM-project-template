@@ -11,4 +11,5 @@ interface PostApi {
 
     @GET("/users/{userId}/posts")
     fun getPostsByUser(@Path("userId") userId: Int): Deferred<List<Post>>
+
 }
