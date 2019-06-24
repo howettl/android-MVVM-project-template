@@ -3,8 +3,6 @@ package com.howettl.mvvm.injection.module
 import com.howettl.mvvm.BuildConfig
 import com.howettl.mvvm.data.network.PostApi
 import com.howettl.mvvm.data.network.UserApi
-import com.howettl.mvvm.data.repository.PostRemoteRepository
-import com.howettl.mvvm.data.repository.UserRemoteRepository
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
@@ -18,8 +16,8 @@ object NetworkModule {
     @Provides
     @Singleton
     @JvmStatic
-    internal fun provideUserRemoteRepository(userApi: UserApi): UserRemoteRepository {
-        return UserRemoteRepository(userApi)
+    internal fun providePostApi(retrofit: Retrofit): PostApi {
+        return retrofit.create(PostApi::class.java)
     }
 
     @Provides
@@ -27,20 +25,6 @@ object NetworkModule {
     @JvmStatic
     internal fun provideUserApi(retrofit: Retrofit): UserApi {
         return retrofit.create(UserApi::class.java)
-    }
-
-    @Provides
-    @Singleton
-    @JvmStatic
-    internal fun providePostRemoteRepository(postApi: PostApi): PostRemoteRepository {
-        return PostRemoteRepository(postApi)
-    }
-
-    @Provides
-    @Singleton
-    @JvmStatic
-    internal fun providePostApi(retrofit: Retrofit): PostApi {
-        return retrofit.create(PostApi::class.java)
     }
 
     @Provides

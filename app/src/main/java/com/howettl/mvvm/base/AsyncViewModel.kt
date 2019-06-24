@@ -6,6 +6,7 @@ import com.howettl.mvvm.injection.component.DaggerViewModelInjector
 import com.howettl.mvvm.injection.component.ViewModelInjector
 import com.howettl.mvvm.injection.module.DatabaseModule
 import com.howettl.mvvm.injection.module.NetworkModule
+import com.howettl.mvvm.injection.module.RepositoryModule
 import com.howettl.mvvm.ui.user.UserDetailViewModel
 import com.howettl.mvvm.ui.user.UserListViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -20,6 +21,7 @@ abstract class AsyncViewModel(context: Context): ViewModel(), CoroutineScope {
                 .context(context)
                 .networkModule(NetworkModule)
                 .databaseModule(DatabaseModule)
+                .repositoryModule(RepositoryModule)
                 .build()
 
     private var viewModelJob = Job()

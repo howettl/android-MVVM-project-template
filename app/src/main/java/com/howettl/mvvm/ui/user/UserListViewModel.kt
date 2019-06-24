@@ -4,22 +4,17 @@ import android.content.Context
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import com.howettl.mvvm.R
 import com.howettl.mvvm.base.AsyncViewModel
 import com.howettl.mvvm.data.model.User
-import com.howettl.mvvm.data.repository.UserLocalRepository
-import com.howettl.mvvm.data.repository.UserRemoteRepository
+import com.howettl.mvvm.data.repository.UserRepository
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
-class UserListViewModel(context: Context): AsyncViewModel(context) {
+class UserListViewModel(context: Context) : AsyncViewModel(context) {
 
     @Inject
-    lateinit var userRemoteRepository: UserRemoteRepository
-    @Inject
-    lateinit var userLocalRepository: UserLocalRepository
+    lateinit var userRepository: UserRepository
 
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     val errorMessage: MutableLiveData<Int> = MutableLiveData()
@@ -34,17 +29,17 @@ class UserListViewModel(context: Context): AsyncViewModel(context) {
 
     fun loadUsers() {
         if (users == null) {
-            users = userLocalRepository.getAll()
+            users = userRepository.getCachedUsers()
         }
 
         launch {
-            if (userLocalRepository.count() == 0) {
+            if (userRepository.countCached() == 0) {
                 loadingVisibility.value = View.VISIBLE
             }
 
             try {
-                val updatedUsers = userRemoteRepository.getUsers()
-                userLocalRepository.insert(*updatedUsers.toTypedArray())
+                val updatedUsers = userRepository.getRemoteUsers()
+                userRepository.insertCached(*updatedUsers.toTypedArray())
             } catch (e: Exception) {
                 Timber.e(e)
             }
