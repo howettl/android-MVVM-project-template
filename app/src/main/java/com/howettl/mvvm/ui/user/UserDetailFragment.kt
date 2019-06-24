@@ -34,7 +34,7 @@ class UserDetailFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val userId = UserDetailFragmentArgs.fromBundle(arguments).userId
+        val userId = UserDetailFragmentArgs.fromBundle(arguments ?: return).userId
         viewModel.loadUser(userId)
 
         val adapter = PostAdapter()
