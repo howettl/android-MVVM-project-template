@@ -7,7 +7,6 @@ import com.howettl.mvvm.injection.component.DaggerFragmentInjector
 import com.howettl.mvvm.injection.component.FragmentInjector
 import com.howettl.mvvm.injection.module.DatabaseModule
 import com.howettl.mvvm.injection.module.NetworkModule
-import com.howettl.mvvm.injection.module.RepositoryModule
 import javax.inject.Inject
 
 abstract class InjectedFragment : Fragment() {
@@ -22,10 +21,7 @@ abstract class InjectedFragment : Fragment() {
 
         injector = DaggerFragmentInjector
             .builder()
-            .context(context)
-            .databaseModule(DatabaseModule)
-            .networkModule(NetworkModule)
-            .repositoryModule(RepositoryModule)
+            .context(context.applicationContext)
             .build()
             .also {
                 it.inject(this@InjectedFragment)

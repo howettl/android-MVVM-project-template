@@ -1,14 +1,13 @@
 package com.howettl.mvvm.data.repository
 
-import androidx.lifecycle.LiveData
 import com.howettl.mvvm.data.database.PostDao
-import com.howettl.mvvm.data.model.Post
 import com.howettl.mvvm.data.network.PostApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import javax.inject.Inject
 
-class PostRepository(private val postDao: PostDao, private val postApi: PostApi) {
+class PostRepository @Inject constructor(private val postDao: PostDao, private val postApi: PostApi) {
 
     fun getPosts() = postDao.all()
 

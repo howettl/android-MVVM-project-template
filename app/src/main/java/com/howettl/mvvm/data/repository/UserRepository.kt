@@ -1,13 +1,13 @@
 package com.howettl.mvvm.data.repository
 
 import com.howettl.mvvm.data.database.UserDao
-import com.howettl.mvvm.data.model.User
 import com.howettl.mvvm.data.network.UserApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import javax.inject.Inject
 
-class UserRepository(private val userDao: UserDao, private val userApi: UserApi) {
+class UserRepository @Inject constructor(private val userDao: UserDao, private val userApi: UserApi) {
 
     fun getUsers() = userDao.all()
 
