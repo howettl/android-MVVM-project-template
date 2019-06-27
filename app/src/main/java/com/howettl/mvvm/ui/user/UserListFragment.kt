@@ -6,9 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,10 +14,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.howettl.mvvm.R
 import com.howettl.mvvm.base.InjectedFragment
 import com.howettl.mvvm.databinding.FragmentUserListBinding
-import com.howettl.mvvm.injection.ViewModelFactory
-import javax.inject.Inject
+import com.howettl.mvvm.injection.component.ApplicationComponent
 
-class UserListFragment: InjectedFragment() {
+class UserListFragment : InjectedFragment() {
 
     private lateinit var binding: FragmentUserListBinding
     private lateinit var viewModel: UserListViewModel
@@ -62,5 +59,9 @@ class UserListFragment: InjectedFragment() {
 
     private fun hideError() {
         errorSnackbar?.dismiss()
+    }
+
+    override fun inject(component: ApplicationComponent) {
+        component.inject(this)
     }
 }

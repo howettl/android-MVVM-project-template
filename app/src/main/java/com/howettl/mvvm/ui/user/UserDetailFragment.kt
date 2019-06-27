@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.howettl.mvvm.R
 import com.howettl.mvvm.base.InjectedFragment
 import com.howettl.mvvm.databinding.FragmentUserDetailBinding
-import com.howettl.mvvm.injection.ViewModelFactory
+import com.howettl.mvvm.injection.component.ApplicationComponent
 import com.howettl.mvvm.ui.post.PostAdapter
 
 class UserDetailFragment : InjectedFragment() {
@@ -45,5 +44,9 @@ class UserDetailFragment : InjectedFragment() {
         viewModel.user.observe(this, Observer {
             binding.user = it
         })
+    }
+
+    override fun inject(component: ApplicationComponent) {
+        component.inject(this)
     }
 }
